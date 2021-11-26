@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="435.0" prefWidth="601.0">
+         <children>
+            <TextField fx:id="FIO" layoutX="110.0" layoutY="39.0" />
+            <TextField fx:id="date" layoutX="110.0" layoutY="82.0" />
+            <TextField fx:id="number" layoutX="110.0" layoutY="127.0" />
+            <TextField fx:id="arrears" layoutX="110.0" layoutY="173.0" />
+            <TextField fx:id="paid" layoutX="110.0" layoutY="217.0" />
+            <Text layoutX="10.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО" />
+            <Text layoutX="10.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата" />
+            <Text layoutX="10.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер" />
+            <Text layoutX="10.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Задолженность" />
+            <Text layoutX="10.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Внесено" />
+            <Text layoutX="75.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Курилович Дарья Олеговна, 2021, 3 курс, 12 группа" />
+            <TableView fx:id="table" layoutX="267.0" layoutY="40.0" prefHeight="199.0" prefWidth="329.0">
+              <columns>
+                <TableColumn prefWidth="45.33331298828125" text="ФИО" />
+                <TableColumn prefWidth="34.00006103515625" text="Дата" />
+                  <TableColumn prefWidth="74.0" text="Номер" />
+                  <TableColumn prefWidth="85.3333740234375" text="Задолженность" />
+                  <TableColumn prefWidth="120.6666259765625" text="Внесено" />
+              </columns>
+            </TableView>
+            <Button fx:id="add" layoutX="117.0" layoutY="265.0" mnemonicParsing="false" text="Добавить " />
+            <Button fx:id="addRow" layoutX="415.0" layoutY="265.0" mnemonicParsing="false" text="Добавить запись" />
+            <Button fx:id="createDocument" layoutX="241.0" layoutY="336.0" mnemonicParsing="false" text="Создать документ " />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>
