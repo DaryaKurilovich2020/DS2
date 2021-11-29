@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.nio.channels.Selector;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,8 +14,8 @@ public class Filler {
     private SimpleIntegerProperty number;
     private SimpleDoubleProperty arrears;
     private SimpleDoubleProperty paid;
-
-    public Filler(String FIO, String date, int number, Double arrears, Double paid) {
+private SimpleDateFormat format =new SimpleDateFormat("dd.MM.yyyy");
+    public Filler(String FIO, String  date, int number, Double arrears, Double paid) {
         this.FIO = new SimpleStringProperty(FIO);
         this.date = new SimpleStringProperty(date);
         this.number = new SimpleIntegerProperty(number);
@@ -36,6 +37,10 @@ public class Filler {
 
     public SimpleStringProperty dateProperty() {
         return date;
+    }
+
+    public SimpleDateFormat getFormat() {
+        return format;
     }
 
     public int getNumber() {

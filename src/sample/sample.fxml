@@ -33,11 +33,11 @@
             <Text layoutX="75.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Курилович Дарья Олеговна, 2021, 3 курс, 12 группа" />
             <TableView fx:id="table" layoutX="267.0" layoutY="40.0" prefHeight="199.0" prefWidth="329.0">
               <columns>
-                <TableColumn prefWidth="45.33331298828125" text="ФИО" />
-                <TableColumn prefWidth="34.00006103515625" text="Дата" />
-                  <TableColumn prefWidth="74.0" text="Номер" />
-                  <TableColumn prefWidth="85.3333740234375" text="Задолженность" />
-                  <TableColumn prefWidth="120.6666259765625" text="Внесено" />
+                <TableColumn fx:id="FIOcolumn"  prefWidth="45.33331298828125" text="ФИО" />
+                <TableColumn fx:id="dateColumn" prefWidth="34.00006103515625" text="Дата" />
+                  <TableColumn fx:id="numberColumn" prefWidth="74.0" text="Номер" />
+                  <TableColumn fx:id="arrearsColumn" prefWidth="85.3333740234375" text="Задолженность" />
+                  <TableColumn fx:id="paidColumn" prefWidth="120.6666259765625" text="Внесено" />
               </columns>
             </TableView>
             <Button fx:id="add" layoutX="117.0" layoutY="265.0" mnemonicParsing="false" text="Добавить " />

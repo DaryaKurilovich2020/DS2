@@ -1,29 +1,31 @@
 package sample;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.security.auth.callback.Callback;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.URL;
-import java.security.Timestamp;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Controller {
@@ -32,7 +34,7 @@ public class Controller {
     @FXML
     private ResourceBundle resources;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
+    private Desktop desktop = Desktop.getDesktop();
     @FXML
     private URL location;
 
@@ -74,7 +76,7 @@ public class Controller {
     private TableColumn<Filler, Double> paidColumn;
 
     @FXML
-    private TableColumn<Filler, Date> dateColumn;
+    private TableColumn<Filler, String> dateColumn;
 
 
     public Controller() {
@@ -82,14 +84,32 @@ public class Controller {
 
     @FXML
     void initialize() {
+
         handleCreateDocument();
         handleAdd();
         handleAddRow();
         FIOcolumn.setCellValueFactory(new PropertyValueFactory<>("FIO"));
+        FIOcolumn.setStyle("-fx-alignment: LEFT;");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
+
+        dateColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                try {
+                    return Long.compare(simpleDateFormat.parse(o1).getTime(), simpleDateFormat.parse(o2).getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return -1;
+            }
+        });
+        dateColumn.setStyle("-fx-alignment: CENTER;");
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("Number"));
+        numberColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
         arrearsColumn.setCellValueFactory(new PropertyValueFactory<>("Arrears"));
+        arrearsColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
         paidColumn.setCellValueFactory(new PropertyValueFactory<>("Paid"));
+        paidColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
         table.setItems(fillersList);
 
     }
@@ -117,8 +137,26 @@ public class Controller {
             Node node = (Node) actionEvent.getSource();
             Stage myStage = (Stage) node.getScene().getWindow();
             FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File("C:\\Users\\Darya\\Desktop"));
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("DOCX", "*.docx"),
+                    new FileChooser.ExtensionFilter("DOTX", "*.dotx")
+            );
             fileChooser.setTitle("Open Resource File");
-            fileChooser.showOpenDialog(myStage);
+            File file = fileChooser.showOpenDialog(myStage);
+            File newFile = new File("C:\\User\\Darya\\Desktop\\DS2");
+            try {
+                Files.copy(file.toPath(), newFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (newFile != null) {
+                try {
+                    desktop.open(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
 //        createDocument.setOnAction(actionEvent -> {
@@ -134,9 +172,7 @@ public class Controller {
     }
 
     public void handleAddRow() {
-        addRow.setOnAction(actionEvent -> {
-            fillersList.add(createRandomFiller());
-        });
+        addRow.setOnAction(actionEvent -> fillersList.add(createRandomFiller()));
     }
 
 
@@ -152,8 +188,7 @@ public class Controller {
     public static long random() {
         long leftLimit = 100000000L;
         long rightLimit = 10000000000000L;
-        long generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
-        return generatedLong;
+        return leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
     }
 }
 
