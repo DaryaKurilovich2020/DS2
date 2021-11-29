@@ -1,40 +1,32 @@
 package sample;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.security.auth.callback.Callback;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 
 public class Controller {
     public static Integer FIOnumber = 0;
-    private List<Filler> fillers = new ArrayList<>();
-    @FXML
-    private ResourceBundle resources;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    private Desktop desktop = Desktop.getDesktop();
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private final Desktop desktop = Desktop.getDesktop();
     @FXML
     private URL location;
 
@@ -92,16 +84,13 @@ public class Controller {
         FIOcolumn.setStyle("-fx-alignment: LEFT;");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
 
-        dateColumn.setComparator(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                try {
-                    return Long.compare(simpleDateFormat.parse(o1).getTime(), simpleDateFormat.parse(o2).getTime());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return -1;
+        dateColumn.setComparator((o1, o2) -> {
+            try {
+                return Long.compare(simpleDateFormat.parse(o1).getTime(), simpleDateFormat.parse(o2).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            return -1;
         });
         dateColumn.setStyle("-fx-alignment: CENTER;");
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("Number"));
